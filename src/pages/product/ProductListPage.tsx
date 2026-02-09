@@ -22,7 +22,7 @@ function ProductListPage() {
   const [page, setPage] = useState(0)
   const [selectedProductId, setSelectedProductId] = useState<number | null>(null)
   const [isOrderOpen, setIsOrderOpen] = useState(false)
-  const [quantity, setQuantity] = useState(1)
+  const [quantity, setQuantity] = useState('1')
   const [orderError, setOrderError] = useState('')
   const [orderSuccess, setOrderSuccess] = useState(false)
   const { data, isLoading, isError, error, refetch } = useProducts({
@@ -46,16 +46,21 @@ function ProductListPage() {
   const userPoint = pointData?.data?.point ?? 0
   const product = detailData?.data
   const maxStock = product?.stockQuantity ?? 0
-  const totalPrice = product ? product.price * quantity : 0
+  const quantityNumber = Number(quantity)
+  const hasValidQuantity = Number.isFinite(quantityNumber) && quantityNumber > 0
+  const clampedQuantity = hasValidQuantity
+    ? Math.min(Math.max(quantityNumber, 1), maxStock)
+    : 0
+  const totalPrice = product ? product.price * clampedQuantity : 0
   const canOrder =
     product &&
-    quantity > 0 &&
-    quantity <= maxStock &&
+    hasValidQuantity &&
+    clampedQuantity <= maxStock &&
     totalPrice > 0 &&
     totalPrice <= userPoint
 
   const handleOpenOrder = () => {
-    setQuantity(1)
+    setQuantity('1')
     setOrderError('')
     setOrderSuccess(false)
     setIsOrderOpen(true)
@@ -73,7 +78,7 @@ function ProductListPage() {
       await mutateAsync({
         productId: product.id,
         price: product.price,
-        quantity,
+        quantity: clampedQuantity,
       })
       setIsOrderOpen(false)
       setOrderSuccess(true)
@@ -295,13 +300,15 @@ function ProductListPage() {
                     max={maxStock}
                     value={quantity}
                     onChange={(event) => {
-                      const value = Number(event.target.value)
-                      if (Number.isNaN(value)) {
-                        setQuantity(1)
+                      const value = event.target.value
+                      if (value === '') {
+                        setQuantity('')
                         return
                       }
-                      const clamped = Math.min(Math.max(value, 1), maxStock)
-                      setQuantity(clamped)
+                      const numeric = Number(value)
+                      if (Number.isNaN(numeric)) return
+                      const clamped = Math.min(Math.max(numeric, 1), maxStock)
+                      setQuantity(String(clamped))
                     }}
                     className="border border-black px-3 py-2 text-sm"
                   />
