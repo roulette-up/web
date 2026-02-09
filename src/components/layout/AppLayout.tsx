@@ -19,7 +19,7 @@ function AppLayout() {
       <Outlet />
       <nav className="fixed bottom-0 left-0 right-0 border-t border-black bg-[#D6FF00] text-sm">
         <div className="mx-auto flex w-full max-w-3xl items-center justify-between px-6 py-4">
-          <button className="px-2 py-1" type="button">
+          <button className="px-2 py-1" type="button" onClick={() => navigate('/products')}>
             상품 목록
           </button>
           <button className="px-2 py-1" type="button">
