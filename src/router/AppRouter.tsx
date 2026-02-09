@@ -1,7 +1,10 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import AppLayout from '../components/layout/AppLayout'
+import RequireAuth from '../components/layout/RequireAuth'
 import ErrorBoundary from '../components/common/ErrorBoundary'
 import LoginPage from '../pages/auth/LoginPage'
 import HomePage from '../pages/home/HomePage'
+import MyPage from '../pages/point/MyPage'
 import NotFoundPage from '../pages/common/NotFoundPage'
 
 function AppRouter() {
@@ -10,7 +13,16 @@ function AppRouter() {
       <ErrorBoundary>
         <Routes>
           <Route path="/" element={<LoginPage />} />
-          <Route path="/home" element={<HomePage />} />
+          <Route
+            element={
+              <RequireAuth>
+                <AppLayout />
+              </RequireAuth>
+            }
+          >
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/mypage" element={<MyPage />} />
+          </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </ErrorBoundary>
