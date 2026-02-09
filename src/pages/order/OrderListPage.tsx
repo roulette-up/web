@@ -42,6 +42,7 @@ function OrderListPage() {
   const { mutateAsync: cancelOrder, isPending: isCancelling } = useCancelOrder()
   const [cancelError, setCancelError] = useState('')
   const [cancelSuccess, setCancelSuccess] = useState(false)
+  const [confirmCancelOpen, setConfirmCancelOpen] = useState(false)
   const queryClient = useQueryClient()
   const { open: openNotifications } = useNotificationDrawer()
 
@@ -61,8 +62,7 @@ function OrderListPage() {
 
   const handleCancel = async () => {
     if (!selectedOrderId || isCancelling) return
-    const confirmed = window.confirm('주문을 취소할까요?')
-    if (!confirmed) return
+    setConfirmCancelOpen(false)
     setCancelError('')
     setCancelSuccess(false)
     try {
@@ -251,12 +251,37 @@ function OrderListPage() {
               <button
                 className="mt-6 w-full rounded-full bg-[#D6FF00] px-4 py-3 text-sm font-medium text-black transition hover:bg-[#C5EB00]"
                 type="button"
-                onClick={handleCancel}
+                onClick={() => setConfirmCancelOpen(true)}
                 disabled={isCancelling}
               >
                 {isCancelling ? '취소 중...' : '주문 취소'}
               </button>
               {cancelError ? <p className="mt-3 text-xs">{cancelError}</p> : null}
+            </div>
+          </div>
+        ) : null}
+
+        {confirmCancelOpen ? (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 px-6">
+            <div className="w-full max-w-sm border border-black bg-white p-6 text-center text-sm">
+              <h2 className="text-lg font-semibold">주문 취소</h2>
+              <p className="mt-2">주문을 취소할까요?</p>
+              <div className="mt-6 flex items-center justify-between gap-3">
+                <button
+                  className="w-full rounded-full border border-black bg-white px-4 py-3 text-sm font-medium text-black"
+                  type="button"
+                  onClick={() => setConfirmCancelOpen(false)}
+                >
+                  닫기
+                </button>
+                <button
+                  className="w-full rounded-full bg-[#D6FF00] px-4 py-3 text-sm font-medium text-black transition hover:bg-[#C5EB00]"
+                  type="button"
+                  onClick={handleCancel}
+                >
+                  취소하기
+                </button>
+              </div>
             </div>
           </div>
         ) : null}
