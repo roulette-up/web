@@ -5,6 +5,7 @@ import { useProducts } from '../../hooks/queries/useProducts'
 import { useProductDetail } from '../../hooks/queries/useProductDetail'
 import { useCreateOrder } from '../../hooks/queries/useCreateOrder'
 import { useUserPoint } from '../../hooks/queries/useUserPoint'
+import { useNotificationDrawer } from '../../components/layout/NotificationContext'
 
 const PAGE_SIZE = 12
 
@@ -37,6 +38,7 @@ function ProductListPage() {
   const { data: pointData } = useUserPoint()
   const { mutateAsync, isPending: isOrdering } = useCreateOrder()
   const queryClient = useQueryClient()
+  const { open: openNotifications } = useNotificationDrawer()
 
   const pageInfo = data?.data?.page
   const products = data?.data?.content ?? []
@@ -114,7 +116,14 @@ function ProductListPage() {
                 ←
               </button>
               <h1 className="text-2xl font-semibold">상품 목록</h1>
-              <span className="w-12" />
+              <button
+                className="rounded-full border border-black bg-white px-3 py-2 text-xs"
+                type="button"
+                onClick={openNotifications}
+                aria-label="알림 열기"
+              >
+                알림
+              </button>
             </div>
           </div>
 
