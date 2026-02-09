@@ -78,6 +78,7 @@ function ProductListPage() {
       queryClient.invalidateQueries({ queryKey: ['user-point'] })
       queryClient.invalidateQueries({ queryKey: ['products'] })
       queryClient.invalidateQueries({ queryKey: ['product-detail', product.id] })
+      queryClient.invalidateQueries({ queryKey: ['orders'] })
     } catch (err) {
       const message = err instanceof Error ? err.message : '주문에 실패했습니다.'
       setOrderError(message)
