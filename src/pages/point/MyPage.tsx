@@ -31,13 +31,15 @@ function MyPage() {
   const records = data?.data?.content ?? []
   const totalPages = pageInfo?.totalPages ?? 0
 
-  const canPrev = page > 0
-  const canNext = pageInfo ? page + 1 < totalPages : false
-
   const pageLabel = useMemo(() => {
     if (!pageInfo) return '1 / 1'
     return `${page + 1} / ${Math.max(totalPages, 1)}`
   }, [page, pageInfo, totalPages])
+
+  const groupStart = Math.floor(page / 5) * 5
+  const groupEnd = Math.min(groupStart + 5, Math.max(totalPages, 1))
+  const canPrevGroup = groupStart > 0
+  const canNextGroup = groupEnd < Math.max(totalPages, 1)
 
   return (
     <PageState
@@ -117,8 +119,17 @@ function MyPage() {
               )}
             </div>
             <div className="flex flex-wrap items-center justify-center gap-2 border-t border-black pt-4 text-sm">
+              <button
+                className="h-9 w-9 rounded-full border border-black text-sm disabled:opacity-40"
+                type="button"
+                onClick={() => setPage(Math.max(groupStart - 1, 0))}
+                disabled={!canPrevGroup}
+                aria-label="이전 5페이지"
+              >
+                ‹
+              </button>
               {Array.from({ length: Math.max(totalPages, 1) }, (_, index) => index)
-                .slice(Math.floor(page / 5) * 5, Math.floor(page / 5) * 5 + 5)
+                .slice(groupStart, groupEnd)
                 .map((index) => (
                   <button
                     key={index}
@@ -132,6 +143,15 @@ function MyPage() {
                     {index + 1}
                   </button>
                 ))}
+              <button
+                className="h-9 w-9 rounded-full border border-black text-sm disabled:opacity-40"
+                type="button"
+                onClick={() => setPage(groupEnd)}
+                disabled={!canNextGroup}
+                aria-label="다음 5페이지"
+              >
+                ›
+              </button>
             </div>
           </div>
         </div>
