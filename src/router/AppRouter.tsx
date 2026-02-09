@@ -5,6 +5,7 @@ import ErrorBoundary from '../components/common/ErrorBoundary'
 import LoginPage from '../pages/auth/LoginPage'
 import HomePage from '../pages/home/HomePage'
 import MyPage from '../pages/point/MyPage'
+import ProductListPage from '../pages/product/ProductListPage'
 import NotFoundPage from '../pages/common/NotFoundPage'
 
 function AppRouter() {
@@ -22,6 +23,7 @@ function AppRouter() {
           >
             <Route path="/home" element={<HomePage />} />
             <Route path="/mypage" element={<MyPage />} />
+            <Route path="/products" element={<ProductListPage />} />
           </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
