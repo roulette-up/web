@@ -5,6 +5,7 @@ import { usePointRecords } from '../../hooks/queries/usePointRecords'
 import { useUserPoint } from '../../hooks/queries/useUserPoint'
 import { storage } from '../../utils/storage'
 import type { PointRecordStatus } from '../../types/point'
+import { useNotificationDrawer } from '../../components/layout/NotificationContext'
 
 const PAGE_SIZE = 10
 
@@ -22,6 +23,7 @@ function MyPage() {
   const { data: pointData } = useUserPoint()
   const userPoint = pointData?.data?.point ?? 0
   const navigate = useNavigate()
+  const { open: openNotifications } = useNotificationDrawer()
   const { data, isLoading, isError, error, refetch } = usePointRecords({
     page,
     size: PAGE_SIZE,
@@ -60,7 +62,14 @@ function MyPage() {
                 ←
               </button>
               <h1 className="text-2xl font-semibold">마이페이지</h1>
-              <span className="w-12" />
+              <button
+                className="rounded-full border border-black bg-white px-3 py-2 text-xs"
+                type="button"
+                onClick={openNotifications}
+                aria-label="알림 열기"
+              >
+                알림
+              </button>
             </div>
           </div>
 

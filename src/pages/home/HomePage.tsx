@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState } from 'react'
 import PageState from '../../components/common/PageState'
 import RouletteWheel from '../../components/roulette/RouletteWheel'
+import { useNotificationDrawer } from '../../components/layout/NotificationContext'
 import { useTodayBudget } from '../../hooks/queries/useTodayBudget'
 import { useTodayParticipation } from '../../hooks/queries/useTodayParticipation'
 import { useParticipateRoulette } from '../../hooks/queries/useParticipateRoulette'
@@ -22,6 +23,7 @@ function HomePage() {
     refetch: refetchParticipation,
   } = useTodayParticipation()
   const { mutateAsync, isPending } = useParticipateRoulette()
+  const { open: openNotifications } = useNotificationDrawer()
   const [isSpinning, setIsSpinning] = useState(false)
   const [spinCompleted, setSpinCompleted] = useState(false)
   const [result, setResult] = useState<ParticipateRes | null>(null)
@@ -96,8 +98,19 @@ function HomePage() {
       <div className="min-h-screen bg-white text-black">
         <div className="mx-auto flex min-h-screen max-w-3xl flex-col items-center px-6 py-10 pb-24">
           <div className="flex w-full flex-col items-center gap-8">
-            <div className="w-full border border-black bg-[#D6FF00] px-6 py-4 text-center">
-              <h1 className="text-3xl font-semibold">Roulette-Up</h1>
+            <div className="w-full border border-black bg-[#D6FF00] px-6 py-4">
+              <div className="flex items-center justify-between">
+                <span className="w-10" />
+                <h1 className="text-3xl font-semibold">Roulette-Up</h1>
+                <button
+                  className="rounded-full border border-black bg-white px-3 py-2 text-xs"
+                  type="button"
+                  onClick={openNotifications}
+                  aria-label="알림 열기"
+                >
+                  알림
+                </button>
+              </div>
             </div>
 
             <div className="w-full border border-black px-6 py-10">

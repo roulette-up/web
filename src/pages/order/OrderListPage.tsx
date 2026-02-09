@@ -6,6 +6,7 @@ import { useOrders } from '../../hooks/queries/useOrders'
 import { useOrderDetail } from '../../hooks/queries/useOrderDetail'
 import { useCancelOrder } from '../../hooks/queries/useCancelOrder'
 import type { OrderStatus } from '../../types/order'
+import { useNotificationDrawer } from '../../components/layout/NotificationContext'
 
 const PAGE_SIZE = 12
 
@@ -42,6 +43,7 @@ function OrderListPage() {
   const [cancelError, setCancelError] = useState('')
   const [cancelSuccess, setCancelSuccess] = useState(false)
   const queryClient = useQueryClient()
+  const { open: openNotifications } = useNotificationDrawer()
 
   const pageInfo = data?.data?.page
   const orders = data?.data?.content ?? []
@@ -98,7 +100,14 @@ function OrderListPage() {
                 ←
               </button>
               <h1 className="text-2xl font-semibold">주문 내역</h1>
-              <span className="w-12" />
+              <button
+                className="rounded-full border border-black bg-white px-3 py-2 text-xs"
+                type="button"
+                onClick={openNotifications}
+                aria-label="알림 열기"
+              >
+                알림
+              </button>
             </div>
           </div>
 
