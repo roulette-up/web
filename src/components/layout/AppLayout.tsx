@@ -22,8 +22,11 @@ function AppLayout() {
           <button className="px-2 py-1" type="button" onClick={() => navigate('/products')}>
             상품 목록
           </button>
-          <button className="px-2 py-1" type="button">
+          <button className="px-2 py-1" type="button" onClick={() => navigate('/orders')}>
             주문 내역
+          </button>
+          <button className="px-2 py-1" type="button" onClick={() => navigate('/home')}>
+            홈
           </button>
           <div className="relative">
             <button

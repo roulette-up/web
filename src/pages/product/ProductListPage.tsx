@@ -78,6 +78,7 @@ function ProductListPage() {
       queryClient.invalidateQueries({ queryKey: ['user-point'] })
       queryClient.invalidateQueries({ queryKey: ['products'] })
       queryClient.invalidateQueries({ queryKey: ['product-detail', product.id] })
+      queryClient.invalidateQueries({ queryKey: ['orders'] })
     } catch (err) {
       const message = err instanceof Error ? err.message : '주문에 실패했습니다.'
       setOrderError(message)
@@ -103,8 +104,18 @@ function ProductListPage() {
     >
       <div className="min-h-screen bg-white text-black">
         <div className="mx-auto flex min-h-screen max-w-3xl flex-col gap-8 px-6 py-10 pb-24">
-          <div className="border border-black bg-[#D6FF00] px-6 py-4 text-center">
-            <h1 className="text-2xl font-semibold">상품 목록</h1>
+          <div className="border border-black bg-[#D6FF00] px-6 py-4">
+            <div className="flex items-center justify-between">
+              <button
+                className="rounded-full border border-black bg-white px-3 py-1 text-lg"
+                type="button"
+                onClick={() => window.history.back()}
+              >
+                ←
+              </button>
+              <h1 className="text-2xl font-semibold">상품 목록</h1>
+              <span className="w-12" />
+            </div>
           </div>
 
           <div className="flex items-center justify-between">
