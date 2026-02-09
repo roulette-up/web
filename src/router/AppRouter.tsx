@@ -6,6 +6,7 @@ import LoginPage from '../pages/auth/LoginPage'
 import HomePage from '../pages/home/HomePage'
 import MyPage from '../pages/point/MyPage'
 import ProductListPage from '../pages/product/ProductListPage'
+import OrderListPage from '../pages/order/OrderListPage'
 import NotFoundPage from '../pages/common/NotFoundPage'
 
 function AppRouter() {
@@ -24,6 +25,7 @@ function AppRouter() {
             <Route path="/home" element={<HomePage />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/products" element={<ProductListPage />} />
+            <Route path="/orders" element={<OrderListPage />} />
           </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
