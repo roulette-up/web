@@ -1,73 +1,21 @@
-# React + TypeScript + Vite
+## ⚙️ 기술 스택
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- **Language:** TypeScript (React 18)
+- **Build Tool:** Vite  
+- **Styling:** Tailwind CSS  
+- **Data Fetching:** TanStack Query  
+- **Deployment:** Vercel
 
-Currently, two official plugins are available:
+## 🚀 주요 기능
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+| 구분 | 설명 |
+|---|---|
+| 로그인 | - 닉네임만으로 간편 로그인<br>- DB에 닉네임 존재 시 기존 사용자 조회<br>- 없으면 자동 생성 후 로그인 |
+| 룰렛 참여 | - 하루 1회만 참여 가능<br>- 100 ~ min(1000, 잔여예산) 랜덤 지급 |
+| 룰렛 예산 확인 | - 금일 룰렛의 남은 예산 실시간 확인 |
+| 포인트 기록 조회 | - 룰렛 날짜, 만료 기한 확인<br>- 획득 포인트 / 잔여 포인트 확인<br>- 포인트 상태 확인 |
+| 포인트 상태 | - 사용중<br>- 전액 사용<br>- 만료<br>- 관리자 회수 |
+| 상품 구매 | - 보유 포인트로 상품 구매 |
+| 주문 내역 | - 구매한 상품 주문 이력 조회 |
+| 주문 취소 | - 사용자가 직접 주문 취소 가능 |
+| 알림함 | - 만료 7일 전 알림<br>- 만료 3일 전 알림 |
